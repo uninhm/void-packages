@@ -1,0 +1,24 @@
+# Template file for 'nimdow'
+pkgname=nimdow
+version=0.7.22
+revision=1
+archs="x86_64"
+hostmakedepends="nim"
+short_desc="Window manager written in Nim"
+maintainer="Unai Hernández <unihernandez22@gmail.com>"
+license="GPL-2.0-only"
+homepage='https://github.com/avahe-kellenberger/nimdow'
+distfiles="${homepage}/archive/refs/tags/v${version}.tar.gz"
+checksum=85bc22516fd5b4d77237de4f7dd878153e325c384d2810207d38c74a8bb288c6
+
+do_build() {
+	cd "${pkgname}-${version}"
+	nimble install -yd
+	nimble release
+}
+
+do_install() {
+	vbin "${wrksrc}/${pkgname}-${version}/bin/nimdow"
+	vinstall "${wrksrc}/${pkgname}-${version}/nimdow.desktop" 644 usr/share/xsessions/
+	vinstall "${wrksrc}/${pkgname}-${version}/config.default.toml" 644 usr/share/nimdow/
+}
